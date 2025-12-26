@@ -1,0 +1,27 @@
+# Clone Spyne - Python ML Processing Dependencies
+# Reproduces Spyne's image processing pipeline
+
+# Core ML & Image Processing
+mediapipe>=0.10.8           # Google's ML framework (Spyne uses this)
+opencv-python>=4.8.1        # Image processing
+numpy>=1.24.0               # Numerical operations
+Pillow>=10.1.0              # Image manipulation
+
+# Optional: Better segmentation (SAM)
+# segment-anything>=1.0      # Meta's SAM for better results
+# torch>=2.1.0               # PyTorch for SAM
+
+# Optional: ONNX Runtime for faster inference
+# onnxruntime>=1.16.0
+
+# Image enhancement
+scikit-image>=0.22.0        # Advanced image processing
+
+# API integration
+requests>=2.31.0            # HTTP requests
+boto3>=1.33.0               # AWS S3 integration
+
+# Utilities
+tqdm>=4.66.0                # Progress bars
+python-dotenv>=1.0.0        # Environment variables
+

@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  # API Backend
+  api:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - REDIS_URL=redis://redis:6379
+      - AWS_REGION=${AWS_REGION}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - S3_BUCKET_NAME=${S3_BUCKET_NAME}
+      - S3_PROCESSED_BUCKET=${S3_PROCESSED_BUCKET}
+    depends_on:
+      - redis
+    volumes:
+      - ./apps/api/python:/app/python
+    networks:
+      - clone-spyne-network
+
+  # Web Frontend
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_URL=http://api:3001/api/v1
+    depends_on:
+      - api
+    networks:
+      - clone-spyne-network
+
+  # Redis for job queue
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - clone-spyne-network
+
+  # Python processing worker (optional - can run separately)
+  worker:
+    build:
+      context: ./apps/api
+      dockerfile: Dockerfile.python
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - AWS_REGION=${AWS_REGION}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+    depends_on:
+      - redis
+    volumes:
+      - ./apps/api/python:/app
+    networks:
+      - clone-spyne-network
+
+networks:
+  clone-spyne-network:
+    driver: bridge
+
+volumes:
+  redis-data:
+

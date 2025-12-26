@@ -1,0 +1,47 @@
+{
+  "expo": {
+    "name": "Clone Spyne",
+    "slug": "clone-spyne",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0a0f1a"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.clonespyne.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Clone Spyne needs camera access to capture vehicle photos.",
+        "NSPhotoLibraryUsageDescription": "Clone Spyne needs photo library access to save and upload photos."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0a0f1a"
+      },
+      "package": "com.clonespyne.app",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.READ_EXTERNAL_STORAGE"
+      ]
+    },
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow Clone Spyne to access your camera for capturing vehicle photos."
+        }
+      ]
+    ]
+  }
+}
+
